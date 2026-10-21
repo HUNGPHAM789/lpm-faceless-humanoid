@@ -4,6 +4,7 @@ description: LPM — FACELESS HUMANOID (Boss 22/10/2026). Low-Poly Model — d�
 version: 2.6.0
 author: Antigravity & Hermes (v1) · Claude (v2, 22/10/2026)
 license: MIT
+repo: https://github.com/HUNGPHAM789/lpm-faceless-humanoid   # self-developed skill (Boss 22/10) — ~/.hermes/skills/creative/low-poly-origami-character is a SYMLINK to the local clone; edit → build → §9 row → commit + push
 metadata:
   hermes:
     tags: [faceless-humanoid, 3d-graphics, low-poly, origami, base-mesh, procedural-modeling, threejs, blender, gltf]
