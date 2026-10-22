@@ -84,6 +84,11 @@ Socket (node rỗng `SOCKET_<tên>` trong GLB + toạ độ trong `.json`):
 | `lung` | giữa lưng | ba lô, cánh, bình |
 | `hong_L/R` | hai bên hông | bao súng, túi |
 
+## 4b. LỚP ĐẮP: tóc · đồ · công cụ — để ở skill RIÊNG (Boss 22/10: «cập nhật vào bộ skill … chắc để riêng file model-outfit»)
+Không nhét vào LPM. Skill `humanoid-replaceable-assets` (~/.hermes/skills/creative/humanoid-replaceable-assets/) giữ:
+tóc đặt bằng tia chạm đầu thật · đồ settler = vỏ thân nới 8–11 mm + ống vạt/váy đo theo điểm rải dày · công cụ cầm tay khớp socket `cam_*`
+(cán Ø32 mm, gốc ở chỗ cầm) · cửa «không lún vào người» (parity 3 tia bỏ phiếu). LPM chỉ cần giữ ĐÚNG hợp đồng §4.
+
 ## 5. Cửa soi `soi_lpm.py` (tự chạy trong build; gọi tay: `python3 soi_lpm.py <out>`)
 ① mọi bộ phận kín ② 300–2500 tam giác ③ cao đúng ±1 %, đáy ∈ [−5, +10] mm ④ thể tích 0,055–0,095 m³ × (cao/1,8)³
 ⑤ **thân liền**: cắt ngang mỗi 1 cm từ `mong` tới `vai`, mỗi lát đúng **1 vòng kín**, bậc rộng/sâu ≤ 20 mm

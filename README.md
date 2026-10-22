@@ -21,6 +21,9 @@ watertight parts · triangle budget · height & feet on ground · body volume ·
 part/socket contract · L/R symmetry · waist taper · faceless head density · slight buttocks · forehead profile ·
 no «skirt hem» at the pelvis · hand grips a Ø32 mm cylinder (≥75 % wrap, ≤1.5 mm penetration).
 
+## Layer assets
+Hair, settler outfits and hand tools live in a separate layer skill (`humanoid-replaceable-assets`) and attach via the sockets above — LPM stays a pure base mesh.
+
 ## Design rules (learned the hard way — see `SKILL.md` §9 upgrade log)
 - Change body shape by editing the **section tables** (`THAN`), never by inserting blocks.
 - Keep facet density uniform; this skill is deliberately **faceless** (detailed faces were tried and rejected; code kept in `history/`).
