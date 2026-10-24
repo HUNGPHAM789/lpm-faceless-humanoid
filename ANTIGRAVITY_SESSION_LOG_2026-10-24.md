@@ -338,3 +338,28 @@ python3 toc_origami.py nam /tmp/hair_nam.glb
 python3 toc_origami.py nu  /tmp/hair_nu.glb
 blender -b -P xem_toc.py  # => samples/v2.7_origami_hair.png
 ```
+
+## PHẦN P: GIẢI THÍCH & KHẮC PHỤC TRIỆT ĐỂ MOUNTAIN WATERFALL PACK (v8.0 MASTER)
+*Thời gian*: 21:20:00 - 21:25:00 UTC+7.
+
+### 1. Nguyên nhân kỹ thuật chính xác theo câu hỏi của Boss:
+1. **Tại sao núi ở giữa có màu sẫm hơn (darker color)?**
+   - Trong script v7.0, khối đá đệm phía sau thác (`Mountain_Fill_Behind_Waterfall`) và khối sống núi nối ở giữa (`Center_Connecting_Ridge`) đã bị gán nhầm vật liệu thực nghiệm `mat_da_toi = (78, 72, 66)` (than chì tối), thay vì dùng chung vật liệu vách đá tự nhiên `mat_da = (112, 106, 98)`.
+   - Đỉnh của sống núi giữa lại phủ đá sáng thay vì thảm cỏ xanh `mat_turf_top = (115, 155, 68)`. Điều này tạo ra một mảng đá màu đen sẫm trơ trụi lệch tông nằm kẹp giữa hai quả núi.
+2. **Tại sao vẫn còn khe hở sau thác nước (gap behind waterfall)?**
+   - Máng nước đổ giật cấp theo các bậc vuông góc thẳng đứng ($Y=20.5, 18.8, 16.8$), nhưng khối đá đệm phía sau lại được tạo theo hình mặt phẳng nghiêng vát chéo (slanted ramp).
+   - Độ chênh lệch tọa độ $Y$ giữa máng nước thẳng đứng và mặt đá nghiêng tạo ra một **khoảng trống không khí rỗng từ 45cm đến 90cm** nằm ngay sau lưng dòng nước. Khi nhìn từ góc camera isometric nghiêng ($12^\circ$ yaw, $27^\circ$ pitch), mắt nhìn xuyên thấu qua khe hở này, tạo cảm giác thác nước lơ lửng và hở toang từ trên xuống dưới.
+
+### 2. Biện pháp khắc phục trong Master v8.0 (`build_mountain_waterfall_pack_v8.py`):
+1. **Đồng nhất 100% màu sắc và chất liệu:**
+   - Xóa bỏ hoàn toàn `mat_da_toi`.
+   - Toàn bộ vách núi (Tây, Sống núi giữa, Đông, Bệ đỡ sau thác) dùng chung duy nhất `mat_da = (112, 106, 98)`.
+   - Toàn bộ mặt đỉnh cao nguyên phủ cỏ xanh nắng `mat_turf_top = (115, 155, 68)`.
+2. **Khóa chặt khe hở — Mặt đá bám sát lưng thác nước (Flush Bedrock):**
+   - Dựng khối đá móng phía sau có trắc diện bậc thang khớp 100% từng bậc đổ của thác nước.
+   - Dòng nước màu xanh dương ngồi khít lên mặt đá bậc thang (chỉ lệch $+0.015\text{m}$ để tránh Z-fighting).
+   - Hai bên vách đá tự nhiên kẹp sát mép nước, triệt tiêu 100% mọi khe hở không khí từ đỉnh xuống đáy hồ.
+3. **Đo kiểm Rule 8 & Giao hàng:**
+   - Margins: Left $441\text{px}$, Right $348\text{px}$, Top $89\text{px}$, Bottom $79\text{px}$ (tất cả $\ge 60\text{px}$).
+   - Water pixels = $116,757$, Rock pixels = $273,600$.
+   - Telegram: Photo ID `1193`, GLB Document ID `1194`.
