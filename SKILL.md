@@ -1,14 +1,14 @@
 ---
 name: low-poly-origami-character
 description: LPM — FACELESS HUMANOID (Boss 22/10/2026). Low-Poly Model — dựng THÂN NGƯỜI TRƠN kiểu origami (mặt phẳng, không mặt cong) bằng code, nam/nữ, có HỢP ĐỒNG GẮN (bộ phận có tên + socket) để lớp đắp (tóc, giày, áo, đồ) gắn/thay. Dùng khi cần base mesh người low-poly cho game/three.js/Blender. Build tự chạy cửa soi đo thật.
-version: 2.6.0
+version: 2.7.0
 author: Antigravity & Hermes (v1) · Claude (v2, 22/10/2026)
 license: MIT
 repo: https://github.com/HUNGPHAM789/lpm-faceless-humanoid   # self-developed skill (Boss 22/10) — ~/.hermes/skills/creative/low-poly-origami-character is a SYMLINK to the local clone; edit → build → §9 row → commit + push
 metadata:
   hermes:
     tags: [faceless-humanoid, 3d-graphics, low-poly, origami, base-mesh, procedural-modeling, threejs, blender, gltf]
-    related_skills: [procedural-low-poly-world]
+    related_skills: [humanoid-replaceable-assets, procedural-low-poly-world]
 ---
 
 # LPM — FACELESS HUMANOID · thân người trơn low-poly origami
@@ -127,6 +127,7 @@ Mặt phẳng, `use_smooth=False`, đất sét ấm `#cbb39a` hoặc giấy wash
 | 2.4 | 22/10 | «T lõm làm như thế nào với setup mặt hiện có? thay đổi ít nhất?» | +2 điểm gờ mày; `hoc_mat()` chọc 2 hốc (bỏ 3 tam giác/bên, nối viền về đỉnh lùi 12 mm) | 48→56 tam giác (1,0× thân); hốc sau mày 6 / sau mũi 20 mm | ⑬ vùng T nhẹ (v2.3 trượt ⑬, v2.1 trượt ⑨) |
 | 2.5 | 22/10 | «hốc mắt mũi vẫn chưa ra - cần sáng tạo hơn tính toán kỹ hơn với code» | mắt inset hạnh nhân (viền nhô 2 mm, thành vách, đáy) + con ngươi tối rời; mũi = khối lồi riêng có mặt dưới; vật liệu glTF Body_Ivory/Eye_Dark | đầu 126 tam giác (2,2× thân); con ngươi 1,6 cm²; mặt dưới mũi 11,7 cm² | ⑭ mắt+mũi (v2.4 trượt: 0/0) · ⑨ nới 140/2,5× (v2.1 vẫn trượt 6×) |
 | 2.6 | 22/10 | «cả 2 version trên đều ko đc. reverse lại version bạn mới sửa đầu - tag faceless humanoid. develop spec cho hand (1 ngón cái? co lại để nắm?)» | đầu về v2.3; gỡ ⑬⑭, ⑨ về 80/1,5×; tay 5 khối có bản lề, `--co`; góc nắm do máy dò lưới | tay 74 tam giác; nắm trụ Ø32: nam ôm 81 % lún 0,9 · nữ 78 % lún 0,4 | ⑮ tay nắm (thử ngược: gập 0° → 30 % trượt · gập nửa → 35 % trượt · gập quá → lún 16 mm trượt · găng cũ v2.3 → thiếu bộ phận trượt) |
+| 2.7 | 24/10 | «làm tóc vẫn chưa ra stylized cần phát triển thêm» (Boss 22/10) + «do 1 and 2 like you said» (Boss 24/10) | Tóc múi nêm Origami (Clump Grammar) 12 múi vát nhọn so le quanh đầu + Cửa soi đường viền chân tóc (Silhouette Gate `soi_toc.py`) | 36 tam giác; độ nảy răng cưa nam 25,8 mm / nữ 50,8 mm (≥15 mm); 0/4000 lún sọ | ⑯ Tóc Origami múi nêm (⑯a ≤450 tris, ⑯b răng cưa ≥15 mm, ⑯c 0/4000 lún sọ) |
 
 ### Bài học về CỬA SOI (đừng lặp)
 - v2.3 có HAI thước «váy» báo ĐẠT trên bản vẫn còn gấu váy: ① % diện tích đáy thân ngoài đùi (15 %) ② diện tích mặt úp xuống ngoài đùi (86 cm²). Thứ Boss nhìn là **HÌNH VIỀN** (đường đáy phẳng ngang) — đo diện tích là đổi điều cần chứng minh lấy thứ dễ đo. Cửa ⑫ hiện đo hình viền bằng tia quét.
@@ -146,4 +147,27 @@ for khop, giua, u, n, cd, cg in itertools.product(range(64, 101, 4), range(70, 1
     if lun <= 1.5 and (best is None or om > best[0]): best = (om, lun, khop, giua, u, n, cd, cg)
 print(best)   # ghi vào GOC_NAM / TRU_NAM
 ```
+
+
+## Animating LPM / settler bodies (23/10/2026)
+Animation is NOT done in this skill. Use `humanoid-rig-animation` and read its §PREVENTION RULES + the manifest
+`~/projects/GameDev/anim_settler/MANIFEST_ADJUSTMENTS_2026-10-23.md` first (why Boss had to correct bow/spear/crouch clips and how it is blocked).
+
+## 10. Sub-Skills & Hệ Sinh Thái Companion (GameDev)
+### Sub-skills tích hợp sẵn trong repo (`skills/`)
+1. **`skills/humanoid-replaceable-assets`**:
+   - Quản lý các lớp đắp gắn qua socket: Tóc múi nêm Origami (`toc_origami.py`), quần áo settler (`toc_do.py`), công cụ cầm tay (`cong_cu.py`).
+2. **`skills/procedural-low-poly-world`**:
+   - Dựng thế giới đảo nổi, môi trường diorama low-poly procedurally (Three.js & Godot 4).
+
+### Con trỏ 2 chiều sang Không gian GameDev (`projects/GameDev`)
+- **Đường dẫn**: `/Users/hungpham/projects/GameDev` (Local Companion Workspace).
+- **Phân công & Quan hệ**:
+  - `lpm-faceless-humanoid` là **Authority** cung cấp mesh người base faceless, hợp đồng socket, tóc origami và 16 cửa soi.
+  - `GameDev` là **Engine & Xưởng Game Asset**:
+    - **Engine dựng hình**: `lpms/lpms_helpers.py` (`khoi()`, `khoi_meo()`, `quet()`, `dun()`, `la_gap()`).
+    - **Bảng màu sRGB**: `theme_mau.py`.
+    - **Kho 34 Game Assets**: `lpms_store/` (bàn ghế, công cụ, vũ khí, rương hòm...).
+    - **Starter Packs**: `assets/aoe_starter_pack/` (Mountain Waterfall Pack Master v6.0, Starter 4-Square Storage, Stylized Oak Tree).
+    - **Testbed chuyển động**: `anim_settler/`.
 
